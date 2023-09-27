@@ -7,19 +7,19 @@
 # -b:a n    Uses CBR (valid values of n are 96k, 128k, 192k etc)
 #
 # For more information:
-# https://trac.ffmpeg.org/wiki/Encode/AAC#NativeFFmpegAACEncoder
-# https://ffmpeg.org/ffmpeg-all.html#aac
+# https://ffmpeg.org/ffmpeg-all.html#flac-2
 #------------------------------------------------------------------------------
 
 #Define variables (input)
 $Source_Directory = Read-Host -Prompt "Enter source directory"
-$Output_Directory = Read-Host -Prompt "Enter destination directory"
-$File_Name = Read-Host -Prompt "Enter file name"
+$Output_Directory = $Source_Directory + "-flac"
+#$Output_Directory = Read-Host -Prompt "Enter destination directory"
 #$Output_Format = Read-Host -Prompt "Enter output format (mp3, m4a, flac etc)"
 
-#Assemble strings for input/output
-$Input_File = $Source_Directory + "\" + $File_Name
-$Output_File = $Output_Directory + "\" + ($File_Name.split('.')[0]) + ".m4a"
+#Make output directory
+New-Item -Path (Split-Path -Path $Source_Directory) -Name ((Split-Path -Path $Source_Directory -Leaf) + "-flac") -ItemType "Directory"
 
-#Convert file to AAC
-ffmpeg -i $Input_File -c:v copy -q:a 1.65 $Output_File
+#Convert file to FLAC
+Get-ChildItem -Path $Source_Directory | ForEach-Object -Process `
+{ffmpeg -i $_.fullname -c:v copy -compression_level 5 `
+($Output_Directory + "\" + ($_.name.split('.')[0]) + ".flac")}
