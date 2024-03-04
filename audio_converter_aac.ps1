@@ -12,14 +12,11 @@
 #------------------------------------------------------------------------------
 
 #Define variables (input)
-$Source_Directory = Read-Host -Prompt "Enter source directory"
+$File_Path = Read-Host -Prompt "Enter full file path"
 $Output_Directory = Read-Host -Prompt "Enter destination directory"
-$File_Name = Read-Host -Prompt "Enter file name"
-#$Output_Format = Read-Host -Prompt "Enter output format (mp3, m4a, flac etc)"
 
 #Assemble strings for input/output
-$Input_File = $Source_Directory + "\" + $File_Name
-$Output_File = $Output_Directory + "\" + ($File_Name.split('.')[0]) + ".m4a"
+$Output_File = $Output_Directory + "\" + (Get-Item $File_Path).Basename + ".m4a"
 
 #Convert file to AAC
-ffmpeg -i $Input_File -c:v copy -q:a 1.65 $Output_File
+ffmpeg -i (Get-Item $File_Path) -c:v copy -q:a 1.5 $Output_File

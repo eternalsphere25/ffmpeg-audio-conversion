@@ -18,5 +18,5 @@ $Output_Directory = Read-Host -Prompt "Enter destination directory"
 
 #Convert file to AAC
 Get-ChildItem -Path $Source_Directory | ForEach-Object -Process `
-{ffmpeg -i $_.fullname -c:v copy -q:a 1.65 ($Output_Directory + "\" + `
-($_.name.split('.')[0]) + ".m4a")}
+{ffmpeg -i $_.fullname -c:v copy -q:a 1.5 ($Output_Directory + "\" + `
+($_.Basename) + ".m4a")}
