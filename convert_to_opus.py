@@ -15,8 +15,13 @@ def clean_up_path_str(input_str):
 # STEP 0: Define global variables
 #------------------------------------------------------------------------------
 
-kid3_cli_path = Path(fr"Z:\その他\Software Tools\kid3-3.9.5-win32-x64", 
-                     "kid3-cli.exe")
+# Get kid3-cli executable path from config file
+kid3_cli_dir_info = Path(Path(__file__).parents[1], "info_files", 
+                         "kid3_cli_directory.txt")
+with open(kid3_cli_dir_info, encoding="utf-8") as input_file:
+    kid3_cli_dir = input_file.read()
+
+kid3_cli_path = Path(kid3_cli_dir, "kid3-cli.exe")
 
 
 #------------------------------------------------------------------------------
